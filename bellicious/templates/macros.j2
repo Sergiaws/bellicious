@@ -1,0 +1,39 @@
+{% macro render_bookmark(bookmark) %}
+<li class="xfolkentry">
+    <h3>
+        <a class="taggedlink" href="{{ bookmark.url }}" rel="nofollow">{{ bookmark.title }}</a>
+    </h3>
+    <div class="description">{{ bookmark.description }}</div>
+    <div class="description">{{ bookmark.annotation }}</div>
+    <div class="meta">
+        <strong>Tags:</strong>
+        <ul class="tags">
+            {% for tag in bookmark.tags %}
+            <li><a rel="tag" href="{{ url_for('bookmark.bookmarks_by_tag', tag_name=tag) }}"><span>{{ tag }}</span></a></li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="meta">
+        <strong>Likes:</strong> {{ bookmark.like_count }}
+    </div>
+    <div class="meta">
+        <strong>Posted by:</strong> <a href="{{ url_for('bookmark.user_bookmarks', username=bookmark.user_name) }}"><span>{{ bookmark.user_name }}</span></a>
+    </div>
+    <div class="meta">
+        <strong>Date:</strong> {{ bookmark.date }}
+    </div>
+    {% if g.user %}
+    <ul class="actions">
+        {% if g.user.id == bookmark.user_id %}
+        <li><a href="{{ url_for('bookmark.edit_bookmark', bookmark_id=bookmark.bid) }}"><span>Edit</span></a></li>
+        <li><a href="{{ url_for('bookmark.delete', bookmark_id=bookmark.bid) }}"><span>Delete</span></a></li>
+        {% else %}
+        <li><a href="{{ url_for('bookmark.like', bookmark_id=bookmark.bid) }}"><span>Like</span></a></li>
+        {% endif %}
+        {% if g.user['type'] == 0 %}
+        <li><a href="{{ url_for('admin.mp', bookmark_id=bookmark.bid) }}"><span>Make private</span></a></li>
+        {% endif %}
+    </ul>
+    {% endif %}
+</li>
+{% endmacro %}

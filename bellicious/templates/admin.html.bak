@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Admin{% endblock %}
+{% block content %}
+<div class="colmask fullpage">
+    {% if users %}
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Date Created</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.date_created }}</td>
+                <td>
+                    <a href="{{ url_for('admin.confirm', user_id=user.id) }}">Confirm</a> |
+                    <a href="{{ url_for('admin.delete', user_id=user.id) }}">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No unconfirmed users found.</p>
+    {% endif %}
+</div>
+{% endblock %}

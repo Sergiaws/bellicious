@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% import "macros.j2" as macros %}
+{% block title %}
+Bookmarks tagged with "{{ tag_name }}"
+{% endblock %}
+
+{% block atom_feed_link %}
+<link rel="alternate" type="application/atom+xml" title="Bookmarks Feed for Tag {{ tag_name }}" href="{{ url_for('bookmark.atom_feed', tag=tag_name) }}">
+{% endblock %}
+{% block msg %}Bookmarks tagged with "{{ tag_name }}"{% endblock %}
+{% block content %}
+<div class="colmask fullpage">
+    
+    <ul class="bookmark-list">
+        {% for bookmark in bookmarks %}
+            {{ macros.render_bookmark(bookmark) }}
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

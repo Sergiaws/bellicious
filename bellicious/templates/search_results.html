@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}
+Search Results
+{% endblock %}
+
+{% block content %}
+    <h1>Search Results</h1>
+    {% block flash_messages %} {{ super() }} {% endblock %}
+    {{ results }}<ul>
+        {% for result in results %}
+            <li>
+                <h3><a href="{{ result.url }}">{{ result.title }}</a></h3>
+                <p>{{ result.description }}</p>
+                <a href="{{ url_for('bookmark.post', url=result.url, title=result.title) }}">Add Bookmark</a>
+            </li>
+        {% endfor %}
+    </ul>
+    <a href="{{ url_for('search.search') }}">Back to search</a>
+{% endblock %}

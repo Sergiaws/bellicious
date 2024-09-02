@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title>Bellicious Atom Feed</title>
+    <link href="{{ request.url }}" rel="self"/>
+    <link href="{{"{{ url_for('index') }}"}}"/>
+    <updated>{{ current_date }}</updated>
+    <id>{{ request.url }}</id>
+    <author>
+        <name>Bellicious</name>
+    </author>
+
+    {% for bookmark in bookmarks %}
+        <entry>
+            <title>{{ bookmark.title }}</title>
+            <link href="{{ bookmark.url }}"/>
+            <id>{{ bookmark.url }}</id>
+            <updated>{{ bookmark.date_created }}</updated>
+            <summary>{{ bookmark.description }}</summary>
+            <content type="html">
+                <![CDATA[
+                {{ bookmark.annotation }}
+                ]]>
+            </content>
+            {% if bookmark.tags %}
+                {% for tag in bookmark.tags %}
+                    <category term="{{ tag }}"/>
+                {% endfor %}
+            {% endif %}
+        </entry>
+    {% endfor %}
+</feed>

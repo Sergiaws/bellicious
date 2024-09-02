@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% import "macros.j2" as macros %}
+{% block title %}Liked Bookmarks{% endblock %}
+{% block msg %}Bookmarks You Like{% endblock %}
+{% block content %}
+<div class="colmask fullpage">
+    
+    <ul class="bookmark-list">
+        {% for bookmark in bookmarks %}
+            {{ macros.render_bookmark(bookmark) }}
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

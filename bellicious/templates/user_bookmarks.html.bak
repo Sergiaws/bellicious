@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% import "macros.j2" as macros %}
+{% block title %}
+{% if bookmarks %}
+Bookmarks for {{ bookmarks[0].user_name }}
+{% else %}
+Bookmarks
+{% endif %}
+{% endblock %}
+
+{% block atom_feed_link %}
+<link rel="alternate" type="application/atom+xml" title="User Bookmarks Feed" href="{{ url_for('bookmark.atom_feed', username=username) }}" />
+{% endblock %}
+{% block content %}
+<div class="colmask fullpage">{{ bookmarks }}
+    <h2>
+        {% if bookmarks %}
+        Bookmarks for {{ bookmarks[0].user_name }}
+        {% else %}
+        No bookmarks found
+        {% endif %}
+    </h2>
+    <ul class="bookmark-list">
+        {% for bookmark in bookmarks %}
+            {{ macros.render_bookmark(bookmark) }}
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

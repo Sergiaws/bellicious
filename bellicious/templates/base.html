@@ -1,0 +1,71 @@
+{% block doctype %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">{% endblock %}
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Bellicious: {% block title %}Social bookmarking{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" type="text/css" />
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon.png') }}" />
+    <meta name="description" content="Keep, share, and discover the best of the Web using Bellicious, and access your bookmarks from any device. No matter how old it is!" />
+    <meta name="keywords" content="bellicious, bookmarks, social bookmarking" />
+    <link rel="canonical" href="{{ url_for('mainpage.index', _external=True) }}" />
+    <meta name="MobileOptimized" content="width" />
+    <meta name="HandheldFriendly" content="true" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    {% block robot %}
+    <meta name="robots" content="index, follow" />{% endblock %}
+    {% block atom_feed_link %}
+    <link rel="alternate" type="application/atom+xml" title="Top 10 Bookmarks Feed" href="{{ url_for('bookmark.atom_feed') }}" />
+    {% endblock %}
+</head>
+
+<body>
+    <div id="header">
+        <p><a href="#main" accesskey="s">Skip to main content</a></p>
+        <h1>Bellicious</h1>
+        <h2>{% block msg %}Your bookmarks anywhere!{% endblock %}</h2>
+        {% block search %}
+        <form action="{{ url_for('search.search') }}" method="get">
+            <label for="search">Search</label>
+            <input type="text" name="search" id="search" accesskey="4" />
+            <select name="prov" id="prov">
+                <option value="bellicious">Bellicious</option>
+                <option value="marginalia">the web</option>
+            </select>
+            <input type="submit" value="Go" />
+        </form>
+        {% endblock %}
+        <ul>
+            <li><a href="{{ url_for('mainpage.index') }}" accesskey="0"><span>Home</span></a></li>
+            {% if not g.user %}
+                <li><a href="{{ url_for('auth.login') }}"><span>Login</span></a></li>
+                <li><a href="{{ url_for('register.register') }}"><span>Register</span></a></li>
+            {% else %}
+                <li><a href="{{ url_for('auth.logout') }}"><span>Logout</span></a></li>
+                <li><a href="{{ url_for('bookmark.post') }}" accesskey="5"><span>Add bookmark</span></a></li>
+                <li><a href="{{ url_for('bookmark.user_bookmarks', username=g.user['name']) }}" accesskey="6"><span>My Bookmarks</span></a></li>
+                <li><a href="{{ url_for('bookmark.show_liked_bookmarks') }}"><span>Liked bookmarks</span></a></li>
+            {% endif %}
+        </ul>
+    </div>
+    {% block content %}
+    {% if not errors %}
+    <div class="flashes">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <p class="{{ category }}">{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+    {% endif %}
+    {% endblock %}
+    <div id="footer">
+        <p>Copyright&copy;2023 The Bellicious team. All rights reserved. Disclaimer: this is just a fan project and is not affiliated with del.icio.us in any way.</p>
+    </div>
+    {% block javascript %}{% endblock %}
+</body>
+
+</html>

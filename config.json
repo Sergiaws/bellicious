@@ -1,0 +1,16 @@
+{
+    "host": "localhost",
+    "user": "bellicious",
+    "password": "bellicious",
+    "dbname": "bellicious",
+    "server": "127.0.0.1",
+    "port": "5000",
+    "usetls": true,
+    "usessl": false,
+    "mailserver": "smtp.office365.com",
+    "mailport": 587,
+    "mailusr": "bellicious-2003@outlook.com",
+    "mailpass": "S5g#7e9A91zW",
+    "salt": "delicious",
+    "secret": "deb"
+}

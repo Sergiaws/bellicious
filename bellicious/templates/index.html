@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% import "macros.j2" as macros %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block content %}
+<div class="colmask rightmenu">
+    <div>
+        <div class="col1">
+            <h2>Top 10 Bookmarks</h2>
+            <ul class="bookmark-list">
+                {% for bookmark in bookmarks %}
+                    {{ macros.render_bookmark(bookmark) }}
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col2">
+            <h2>Top 10 Tags</h2>
+            <ol class="tag-list">
+                {% for tag in tags %}
+                    <li><a href="{{ url_for('bookmark.bookmarks_by_tag', tag_name=tag['tag']) }}">{{ tag['tag'] }}</a> ({{ tag['bookmark_count']}})</li>
+                {% endfor %}
+            </ol>
+        </div>
+    </div>
+</div>
+{% endblock %}

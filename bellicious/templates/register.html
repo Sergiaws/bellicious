@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %}Register{% endblock %}
+{% block robot %}
+<meta name="robots" content="noindex, nofollow" />{% endblock %}
+{% block msg %}Welcome! You need to register in order to be able to save, import and export bookmarks!{% endblock %}
+{% block search %}{% endblock %}
+{% block content %}
+{% block flash_messages %}{% with message = get_flashed_messages(with_categories=true) %}
+{% if message %}
+<div class="colmask rightmenu">
+    <div class="col1">
+        {% for category, msg in message %}
+        <p role="alert" class="{{ category }}">{{ msg }}</p>
+        {% endfor %}
+    </div>
+    <div class="col2">
+        {% if errors %}
+        <ul id="server">
+            {% for id, msg in errors.items() %}
+            <li><a href="#{{ id }}">{{ msg }}</a></li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+</div>
+{% endif %}
+{% endwith %}{% endblock %}
+<div class="colmask fullpage" id="main">
+    <form method="post" id="register">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+        <div id="usernameBlock">
+            <label for="username">Username (between 3 and 50 characters)</label>
+            <input type="text" name="username" value="{{ request.form['name'] }}" id="username" minlength="3"
+                maxlength="50" aria-describedby="usernameError" aria-required="true" />
+            <div id="usernameError" class="error" role="alert"></div>
+        </div>
+        <div id="realnameBlock">
+            <label for="realname">Real name</label>
+            <input type="text" name="realname" value="{{ request.form['realname'] }}" id="realname" minlength="3"
+                maxlength="50" aria-describedby="realnameError" aria-required="true" />
+            <div id="realnameError" class="error" role="alert"></div>
+        </div>
+        <div id="emailBlock">
+            <label for="email">Email</label>
+            <input type="text" name="email" value="{{ request.form['email'] }}" id="email" minlength="10"
+                aria-describedby="emailError" aria-required="true" />
+            <div id="emailError" role="alert" class="error"></div>
+        </div>
+        <ul id="pwdRec">
+            <li>Your password must have at least 6 characters,</li>
+            <li>at least one letter and one symbol or number required,</li>
+            <li>may not contain any part of your username or full name</li>
+        </ul>
+        <div id="passwordBlock">
+            <label for="password">Password</label>
+            <input type="password" name="password" value="{{ request.form['password'] }}" id="password"
+                minlength="6" aria-describedby="passwordError" aria-required="true" />
+            <div id="passwordError" class="error" role="alert"></div>
+        </div>
+        <div id="password2Block">
+            <label for="password2">Retype Password</label>
+            <input type="password" name="password2" value="{{ request.form['password2'] }}" id="password2"
+                minlength="6" aria-describedby="passwordMatch" aria-required="true" />
+            <div id="passwordMatch" class="error" role="alert"></div>
+        </div>
+        <div class="finalBlock">
+            <label for="sec">Security question: What is a bookmark?</label>
+            <input type="text" name="sec" value="{{ request.form['sec'] }}" id="sec" minlength="30" />
+            <input type="submit" value="register" />
+        </div>
+    </form>
+</div>
+{% endblock %}
+{% block javascript %}
+<script src="{{ url_for('static', filename='js/register.js') }}"></script>{% endblock %}

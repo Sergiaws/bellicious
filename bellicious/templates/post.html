@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}
+Add New Bookmark
+{% endblock %}
+
+{% block content %}
+{% block msg %}>Add New Bookmark{% endblock %}
+<div class="colmask fullpage">
+    
+    <form action="{{ url_for('bookmark.post') }}" method="post">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+        <div class="form-group">
+            <label for="url">URL:</label>
+            <input type="text" id="url" name="url" value="{{ url }}" />
+        </div>
+        <div class="form-group">
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" value="{{ title }}" />
+        </div>
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea id="description" name="description"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="annotation">Annotation:</label>
+            <textarea id="annotation" name="annotation"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="tags">Tags:</label>
+            <input type="text" id="tags" name="tags" title="Enter tags separated by commas" />
+        </div>
+        <div class="form-group">
+            <label for="type">Type:</label>
+            <select name="type" id="type">
+                <option value="0">Private</option>
+                <option value="1">Public</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <button type="submit">Add Bookmark</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
