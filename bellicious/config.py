@@ -16,4 +16,4 @@ usetls = config['usetls']
 usessl = config['usessl']
 mailusr = config['mailusr']
 mailpass = config['mailpass']
-API_KEY="e17960485c32a51f47f950aa55a4b86e9c739831"
+API_KEY=""
